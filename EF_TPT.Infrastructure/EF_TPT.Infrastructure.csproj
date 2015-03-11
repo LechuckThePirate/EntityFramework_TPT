@@ -47,7 +47,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BoundContexts\CarBoundContext.cs" />
-    <Compile Include="Class1.cs" />
     <Compile Include="Models\Mapping\BaseEntityConfiguration.cs" />
     <Compile Include="Models\Mapping\CarMap.cs" />
     <Compile Include="Models\Mapping\CarPartMap.cs" />

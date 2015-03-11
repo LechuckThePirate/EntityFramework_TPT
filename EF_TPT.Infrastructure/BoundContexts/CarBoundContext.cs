@@ -1,11 +1,6 @@
 ﻿using EF_TPT.Domain;
 using EF_TPT.Infrastructure.Models.Mapping;
-using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EF_TPT.Infrastructure.BoundContexts
 {
