@@ -1,9 +1,4 @@
 ﻿using EF_TPT.Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EF_TPT.Infrastructure.Models.Mapping
 {
@@ -13,6 +8,12 @@ namespace EF_TPT.Infrastructure.Models.Mapping
         {
             this.ToTable("Parts");
 
+            this.Property(t => t.SerialNo)
+                .IsRequired();
+
+            // This is the "magic" of TPT ... we stablish which table will 
+            // handle each class. Note that all classes must inherit from 
+            // the ancestor class CarPart
             this.Map<Wheel>(t => t.ToTable("Wheels"))
                 .Map<Door>(t => t.ToTable("Doors"))
                 .Map<Seat>(t => t.ToTable("Seats"));

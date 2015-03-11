@@ -20,6 +20,7 @@ namespace EF_TPT.Infrastructure.BoundContexts
         public DbSet<Car> Cars { get; set; }
         public DbSet<Door> Doors { get; set; }
         public DbSet<Wheel> Wheels { get; set; }
+        public DbSet<Seat> Seats { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
