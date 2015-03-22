@@ -46,6 +46,7 @@
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
+    <None Include="ClassMap.dgml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
