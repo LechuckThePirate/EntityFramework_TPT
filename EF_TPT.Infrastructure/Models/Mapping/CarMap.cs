@@ -1,4 +1,4 @@
-﻿using EF_TPT.Domain;
+﻿using EF_TPT.Domain.Entities;
 
 namespace EF_TPT.Infrastructure.Models.Mapping
 {

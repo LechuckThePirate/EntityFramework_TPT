@@ -1,4 +1,6 @@
-﻿namespace EF_TPT.Domain
+﻿using EF_TPT.Domain.Entities.Base;
+
+namespace EF_TPT.Domain.Entities
 {
     public class Wheel : CarPart
     {

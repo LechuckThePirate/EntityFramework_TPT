@@ -1,5 +1,6 @@
-﻿using EF_TPT.Domain;
-using System.Data.Entity.ModelConfiguration;
+﻿using System.Data.Entity.ModelConfiguration;
+using EF_TPT.Domain.Entities;
+using EF_TPT.Domain.Entities.Base;
 
 namespace EF_TPT.Infrastructure.Models.Mapping
 {

@@ -1,9 +1,10 @@
-﻿using EF_TPT.Domain;
-using EF_TPT.Infrastructure.BoundContexts;
+﻿using EF_TPT.Infrastructure.BoundContexts;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using EF_TPT.Domain.Entities;
+using EF_TPT.Domain.Entities.Base;
 
 namespace EF_TPT
 {

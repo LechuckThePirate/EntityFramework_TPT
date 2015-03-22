@@ -1,4 +1,4 @@
-﻿namespace EF_TPT.Domain
+﻿namespace EF_TPT.Domain.Entities.Base
 {
     public class CarPart : BaseEntity
     {
