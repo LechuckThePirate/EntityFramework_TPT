@@ -51,7 +51,7 @@ namespace EF_TPT
             using (var context = new CarBoundContext())
             {
                 // If no records, let's create one...
-                if (context.Cars.Count() == 0)
+                if (!context.Cars.Any())
                 {
                     context.Cars.Add(NewCar());
                     context.SaveChanges();
