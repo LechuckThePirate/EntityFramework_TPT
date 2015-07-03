@@ -1,6 +1,6 @@
 ﻿namespace EF_TPT.Domain.Entities.Base
 {
-    public class CarPart : BaseEntity
+    public class CarPart : BaseAuditedEntity
     {
         public long CarId { get; set; }
         public virtual Car Car { get; set; }

@@ -1,4 +1,8 @@
-﻿using EF_TPT.Infrastructure.Models.Mapping;
+﻿using System;
+using System.Linq;
+using System.Runtime.Remoting.Contexts;
+using EF_TPT.Domain.Entities.Base;
+using EF_TPT.Infrastructure.Models.Mapping;
 using System.Data.Entity;
 using EF_TPT.Domain.Entities;
 
@@ -25,6 +29,37 @@ namespace EF_TPT.Infrastructure.BoundContexts
             modelBuilder.Configurations.Add(new SeatMap());
 
             base.OnModelCreating(modelBuilder);
+        }
+
+        private string GetCurrentUser()
+        {
+            var currentUser = System.Security.Principal.WindowsIdentity.GetCurrent();
+            return (currentUser != null) ? currentUser.Name : "Anonymous";
+        }
+
+        public override int SaveChanges()
+        {
+
+            ChangeTracker.Entries().ToList().ForEach(
+                entry =>
+                {
+                    var auditedEntity = entry.Entity as BaseAuditedEntity;
+                    if (auditedEntity != null)
+                    {
+                        if (entry.State == EntityState.Added)
+                        {
+                            auditedEntity.Created = DateTime.Now;
+                            auditedEntity.CreatedBy = GetCurrentUser();
+                        }
+                        if (entry.State == EntityState.Modified)
+                        {
+                            auditedEntity.Updated = DateTime.Now;
+                            auditedEntity.UpdatedBy = GetCurrentUser();
+                        }
+                    }
+                });
+
+            return base.SaveChanges();
         }
     }
 }

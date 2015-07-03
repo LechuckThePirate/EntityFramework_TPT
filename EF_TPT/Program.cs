@@ -58,6 +58,11 @@ namespace EF_TPT
                 }
                 // Fetch the record and display its parts!
                 var car = context.Cars.First();
+
+                // Force an update to see if it's audited
+                car.Model += "*";
+                context.SaveChanges();
+
                 Console.WriteLine("Model: {0}", car.Model);
                 Console.WriteLine("Total parts: {0}", car.Parts.Count);
 
