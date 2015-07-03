@@ -40,22 +40,19 @@ namespace EF_TPT.Infrastructure.BoundContexts
         public override int SaveChanges()
         {
 
-            ChangeTracker.Entries().ToList().ForEach(
+            ChangeTracker.Entries<BaseAuditedEntity>().ToList().ForEach(
                 entry =>
                 {
-                    var auditedEntity = entry.Entity as BaseAuditedEntity;
-                    if (auditedEntity != null)
+                    var auditedEntity = entry.Entity;
+                    if (entry.State == EntityState.Added)
                     {
-                        if (entry.State == EntityState.Added)
-                        {
-                            auditedEntity.Created = DateTime.Now;
-                            auditedEntity.CreatedBy = GetCurrentUser();
-                        }
-                        if (entry.State == EntityState.Modified)
-                        {
-                            auditedEntity.Updated = DateTime.Now;
-                            auditedEntity.UpdatedBy = GetCurrentUser();
-                        }
+                        auditedEntity.Created = DateTime.Now;
+                        auditedEntity.CreatedBy = GetCurrentUser();
+                    }
+                    if (entry.State == EntityState.Modified)
+                    {
+                        auditedEntity.Updated = DateTime.Now;
+                        auditedEntity.UpdatedBy = GetCurrentUser();
                     }
                 });
 
