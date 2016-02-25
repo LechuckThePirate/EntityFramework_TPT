@@ -16,21 +16,29 @@ namespace EF_TPT.Domain.Entities
             Sportive = 1
         }
 
+        public enum SeatPositionEnum
+        {
+            FrontLeft,
+            FrontRight
+        }
+
         public string Brand { get; set; }
         public SeatMaterialEnum Material { get; set; }
         public SeatTypeEnum Type { get; set; }
+        public SeatPositionEnum Position { get; set; }
 
         public Seat() { }
-        public Seat(string serialNumber, string brand, SeatMaterialEnum material, SeatTypeEnum type) : base(serialNumber)
+        public Seat(string serialNumber, SeatPositionEnum position, string brand, SeatMaterialEnum material, SeatTypeEnum type) : base(serialNumber)
         {
             this.Brand = brand;
             this.Material = material;
             this.Type = type;
+            this.Position = position;
         }
 
         public override string ToString()
         {
-            return base.ToString() + string.Format(" - {0} {1} in {2}", Brand, Type, Material);
+            return string.Concat(base.ToString() ,$" - Position: {Position}, {Brand} {Type} in {Material}");
         }
     }
 }

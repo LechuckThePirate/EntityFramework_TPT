@@ -22,7 +22,7 @@ namespace EF_TPT.Domain.Entities
 
         public override string ToString()
         {
-            return base.ToString() + string.Format(" - Posición: {0}", Position);
+            return string.Concat(base.ToString(),$" - Position: {Position}");
         }
     }
 }

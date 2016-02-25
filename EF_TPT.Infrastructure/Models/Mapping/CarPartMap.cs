@@ -21,7 +21,8 @@ namespace EF_TPT.Infrastructure.Models.Mapping
 
             this.HasRequired(t => t.Car)
                 .WithMany(car => car.Parts)
-                .HasForeignKey(t => t.CarId);
+                .HasForeignKey(t => t.CarId)
+                .WillCascadeOnDelete(true);
 
         }
     }

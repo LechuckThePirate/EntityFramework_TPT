@@ -10,68 +10,156 @@ namespace EF_TPT
 {
     class Program
     {
+        #region .: Fields :.
+        private static CarFactory _carFactory = new CarFactory();
+        #endregion
 
-        private static Random _seed = new Random();
-
-        static string NewSerialNumber()
-        {
-            return string.Format("{0:00000000}", _seed.NextDouble() * (double)100000000);
-        }
-
-        static Car NewCar()
-        {
-            return new Car
-            {
-                Model = "Chevrolet Cruze LTZ",
-                Parts = new List<CarPart>
-                {
-                    new Wheel(NewSerialNumber(), "Bridgestone",17.0,225.0),
-                    new Wheel(NewSerialNumber(), "Bridgestone",17.0,225.0),
-                    new Wheel(NewSerialNumber(), "Bridgestone",17.0,225.0),
-                    new Wheel(NewSerialNumber(), "Bridgestone",17.0,225.0),
-                    new Door(NewSerialNumber(), Door.DoorPositionEnum.FrontLeft),
-                    new Door(NewSerialNumber(), Door.DoorPositionEnum.FrontRight),
-                    new Seat(NewSerialNumber(),"Sparco",Seat.SeatMaterialEnum.Leather,Seat.SeatTypeEnum.Sportive),
-                    new Seat(NewSerialNumber(), "Sparco",Seat.SeatMaterialEnum.Fabric,Seat.SeatTypeEnum.Comfort)
-                }
-            };
-        }
-
-        static void PrintParts(string partName, IEnumerable<CarPart> parts)
-        {
-            Console.WriteLine("*** {0} ({1}):", partName, parts.Count());
-            parts.ToList().ForEach(Console.WriteLine);
-        }
+        #region .: Main Program :.
 
         static void Main(string[] args)
         {
+
             // The database will be created at bin/Debug/ by default
             AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
             // Get a new context for de DB (always "using" to dispose the connection)
             using (var context = new CarBoundContext())
             {
-                // If no records, let's create one...
-                if (!context.Cars.Any())
+                do
                 {
-                    context.Cars.Add(NewCar());
-                    context.SaveChanges();
-                }
-                // Fetch the record and display its parts!
-                var car = context.Cars.First();
+                    switch (ShowMenu(context.Cars.Count()))
+                    {
+                        case ConsoleKey.D1:
+                            var newCar = CreateNewCar(context);
+                            ShowNewCar(newCar);
+                            break;
+                        case ConsoleKey.D2:
+                            var cars = GetCars(context);
+                            ShowCars(cars);
+                            break;
+                        case ConsoleKey.D3:
+                            var updatedCar = UpdateRandomCar(context);
+                            ShowUpdatedCar(updatedCar);
+                            break;
+                        case ConsoleKey.D4:
+                            RemoveAllCars(context);
+                            break;
+                        case ConsoleKey.D0:
+                            return;
+                    }
 
-                // Force an update to see if it's audited
-                car.Model += "*";
-                context.SaveChanges();
+                    Console.Clear();
 
-                Console.WriteLine("Model: {0}", car.Model);
-                Console.WriteLine("Total parts: {0}", car.Parts.Count);
-
-                PrintParts("Doors", car.Parts.Where(part => part is Door));
-                PrintParts("Seats", car.Parts.Where(part => part is Seat));
-                PrintParts("Wheels", car.Parts.Where(part => part is Wheel));
-
-                Console.ReadLine();
+                } while (true);
             }
         }
+
+        #endregion
+
+        static Car CreateNewCar(CarBoundContext context)
+        {
+            var newCar = _carFactory.CreateNewRandomCar();
+            context.Cars.Add(newCar);
+            context.SaveChanges();
+            return newCar;
+        }
+
+        static IEnumerable<Car> GetCars(CarBoundContext context)
+        {
+            return context.Cars;
+        }
+
+        static Car UpdateRandomCar(CarBoundContext context)
+        {
+            var randomCar = context.Cars.GetRandomElement();
+            randomCar.Model += $" (modified {DateTime.Now}";
+            context.SaveChanges();
+            return randomCar;
+        }
+
+        static void RemoveAllCars(CarBoundContext context)
+        {
+            var cars = context.Cars;
+            var count = cars.Count();
+            cars.RemoveRange(cars);
+            context.SaveChanges();
+            Console.Clear();
+            Console.WriteLine($"Removed {count} cars from repository.");
+            PressAnyKey();
+        }
+
+        static void PrintParts(string partName, IEnumerable<CarPart> parts)
+        {
+            Console.WriteLine("    *** {0} ({1}):", partName, parts.Count());
+            parts.ToList().ForEach(Console.WriteLine);
+        }
+
+        static void ShowOneCar(Car car)
+        {
+            Console.WriteLine("Model: {0}", car.Model);
+            Console.WriteLine("Total parts: {0}", car.Parts.Count);
+
+            PrintParts("Doors", car.Parts.Where(part => part is Door));
+            PrintParts("Seats", car.Parts.Where(part => part is Seat));
+            PrintParts("Wheels", car.Parts.Where(part => part is Wheel));
+            if (car.Created != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Created {car.Created:dd/MM/yyyy hh:mm} by {car.CreatedBy}");
+            }
+            if (car.Updated != null)
+            {
+                Console.WriteLine();
+                Console.WriteLine($"Updated {car.Updated:dd/MM/yyyy hh:mm} by {car.UpdatedBy}");
+            }
+            Console.WriteLine();
+            Console.WriteLine("----------------------");
+            Console.WriteLine();
+        }
+
+        static void ShowCars(IEnumerable<Car> cars)
+        {
+            Console.Clear();
+            Console.WriteLine($"Listing {cars.Count()} in repository.");
+            Console.WriteLine();
+            cars.ToList().ForEach(car => ShowOneCar(car));
+            PressAnyKey();
+        }
+
+        static void ShowNewCar(Car newCar)
+        {
+            Console.Clear();
+            Console.WriteLine("New car added to repository:");
+            ShowOneCar(newCar);
+            PressAnyKey();
+        }
+
+        static void ShowUpdatedCar(Car updatedCar)
+        {
+            Console.Clear();
+            Console.WriteLine("Car description updated for:");
+            ShowOneCar(updatedCar);
+            PressAnyKey();
+        }
+
+        static ConsoleKey ShowMenu(long carCount)
+        {
+            Console.Clear();
+            Console.WriteLine($"There are {carCount} in the repository.");
+            Console.WriteLine("Options:");
+            Console.WriteLine("    1 : Add new random car to repository");
+            Console.WriteLine("    2 : Show all cars");
+            Console.WriteLine("    3 : Update random car");
+            Console.WriteLine("    4 : Truncate table (remove all cars)");
+            Console.WriteLine();
+            Console.WriteLine("    9 : Exit");
+            return Console.ReadKey().Key;
+        }
+
+        static void PressAnyKey()
+        {
+            Console.WriteLine("Press any key...");
+            Console.ReadKey();
+        }
+
     }
 }

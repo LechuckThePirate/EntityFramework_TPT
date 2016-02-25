@@ -15,7 +15,7 @@
 
         public override string ToString()
         {
-            return string.Format("S/N: {0}", SerialNo);
+            return $"      - S/N: {SerialNo}";
         }
     }
 }
