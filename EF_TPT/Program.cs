@@ -55,6 +55,8 @@ namespace EF_TPT
 
         #endregion
 
+        #region .: Repository Operations :.
+
         static Car CreateNewCar(CarBoundContext context)
         {
             var newCar = _carFactory.CreateNewRandomCar();
@@ -86,6 +88,10 @@ namespace EF_TPT
             Console.WriteLine($"Removed {count} cars from repository.");
             PressAnyKey();
         }
+
+        #endregion
+
+        #region .: Console stuff :.
 
         static void PrintParts(string partName, IEnumerable<CarPart> parts)
         {
@@ -161,5 +167,6 @@ namespace EF_TPT
             Console.ReadKey();
         }
 
+        #endregion
     }
 }
