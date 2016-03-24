@@ -104,9 +104,9 @@ namespace EF_TPT
             Console.WriteLine("Model: {0}", car.Model);
             Console.WriteLine("Total parts: {0}", car.Parts.Count);
 
-            PrintParts("Doors", car.Parts.Where(part => part is Door));
-            PrintParts("Seats", car.Parts.Where(part => part is Seat));
-            PrintParts("Wheels", car.Parts.Where(part => part is Wheel));
+            PrintParts("Doors", car.Parts.OfType<Door>());
+            PrintParts("Seats", car.Parts.OfType<Seat>());
+            PrintParts("Wheels", car.Parts.OfType<Wheel>());
             if (car.Created != null)
             {
                 Console.WriteLine();
@@ -157,7 +157,7 @@ namespace EF_TPT
             Console.WriteLine("    3 : Update random car");
             Console.WriteLine("    4 : Truncate table (remove all cars)");
             Console.WriteLine();
-            Console.WriteLine("    9 : Exit");
+            Console.WriteLine("    0 : Exit");
             return Console.ReadKey().Key;
         }
 
