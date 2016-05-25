@@ -23,6 +23,7 @@ namespace EF_TPT.Domain.Entities
             this.Brand = brand;
             this.Radius = radius;
             this.Width = width;
+            this.Position = position;
         }
 
         public override string ToString()

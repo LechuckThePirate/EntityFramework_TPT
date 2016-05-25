@@ -20,7 +20,7 @@ namespace EF_TPT
         {
 
             // The database will be created at bin/Debug/ by default
-            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine(AppDomain.CurrentDomain.BaseDirectory, ""));
+            AppDomain.CurrentDomain.SetData("DataDirectory", Path.Combine("c:\\temp\\", ""));
             // Get a new context for de DB (always "using" to dispose the connection)
             using (var context = new CarBoundContext())
             {

@@ -39,6 +39,7 @@
     <Compile Include="Entities\Base\CarPart.cs" />
     <Compile Include="Entities\Car.cs" />
     <Compile Include="Entities\Door.cs" />
+    <Compile Include="Entities\EntidadGemela.cs" />
     <Compile Include="Entities\Seat.cs" />
     <Compile Include="Entities\Wheel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

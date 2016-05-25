@@ -7,5 +7,7 @@ namespace EF_TPT.Domain.Entities
     {
         public string Model { get; set; }
         public virtual ICollection<CarPart> Parts { get; set; }
+
+        public virtual EntidadGemela Gemela { get; set; }
     }
 }

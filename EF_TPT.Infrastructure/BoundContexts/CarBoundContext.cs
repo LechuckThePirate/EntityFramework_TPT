@@ -13,7 +13,7 @@ namespace EF_TPT.Infrastructure.BoundContexts
 
         public CarBoundContext(): base("CarsDB") 
         {
-            Database.SetInitializer(new CreateDatabaseIfNotExists<CarBoundContext>());
+            Database.SetInitializer<CarBoundContext>(null);
         }
 
         public DbSet<Car> Cars { get; set; }

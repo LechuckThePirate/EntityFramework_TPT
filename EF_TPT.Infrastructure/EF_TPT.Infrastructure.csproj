@@ -44,6 +44,7 @@
     <Compile Include="Models\Mapping\CarMap.cs" />
     <Compile Include="Models\Mapping\CarPartMap.cs" />
     <Compile Include="Models\Mapping\DoorMap.cs" />
+    <Compile Include="Models\Mapping\EntidadGemelaMap.cs" />
     <Compile Include="Models\Mapping\SeatMap.cs" />
     <Compile Include="Models\Mapping\WheelMap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

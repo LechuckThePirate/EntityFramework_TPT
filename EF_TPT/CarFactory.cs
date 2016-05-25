@@ -31,7 +31,8 @@ namespace EF_TPT
             return new Car
             {
                 Model = CarNames.GetRandomElement(_seed),
-                Parts = parts
+                Parts = parts,
+                Gemela = new EntidadGemela() { Pepe = "pepe_pepe"}
             };
         }
 

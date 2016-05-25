@@ -9,6 +9,9 @@ namespace EF_TPT.Infrastructure.Models.Mapping
             this.ToTable("Cars");
             this.Property(t => t.Model)
                 .IsRequired();
+
+            this.HasRequired(t => t.Gemela)
+                .WithRequiredPrincipal();
         }
     }
 }
