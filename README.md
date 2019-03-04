@@ -1,5 +1,7 @@
 # README #
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0388f25bcf6e461aa351d78f1ece4ee1)](https://app.codacy.com/app/LechuckThePirate/EntityFramework_TPT?utm_source=github.com&utm_medium=referral&utm_content=LechuckThePirate/EntityFramework_TPT&utm_campaign=Badge_Grade_Dashboard)
+
 This project demontrates the use of Entity Framework Code First TPT (Table Per Type) possibilities.
 
 Table Per Type allows you to have a given collection of objects inheriting from the same ancestor class and mapping them to be written to different tables based on their type.
